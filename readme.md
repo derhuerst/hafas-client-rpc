@@ -19,7 +19,30 @@ npm install hafas-client-rpc
 ## Usage
 
 ```js
-todo
+// server.js
+const http = require('http')
+const createHafas = require('hafas-client')
+const vbbProfile = require('hafas-client/p/vbb')
+const exposeHafasClient = require('hafas-client-rpc/server')
+
+const httpServer = http.createServer()
+httpServer.listen(3000)
+
+const hafas = createHafas(vbbProfile)
+const server = exposeHafasClient(httpServer, hafas)
+```
+
+```js
+// client.js
+const createClient = require('hafas-client-rpc/client')
+
+const onError = console.error
+
+createClient('ws://server-address:3000', onError, (hafas) => {
+	hafas.departures('900000009102')
+	.then(console.log)
+	.catch(console.error)
+})
 ```
 
 

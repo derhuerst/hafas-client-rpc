@@ -30,6 +30,7 @@
 		"ws": "^5.2.2"
 	},
 	"devDependencies": {
+		"hafas-client": "^3.0.0-alpha.17"
 	},
 	"scripts": {
 		"test": "env NODE_ENV=dev node test.js",
