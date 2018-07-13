@@ -1,0 +1,35 @@
+{
+	"name": "hafas-client-rpc",
+	"description": "Make JSON-RPC calls to hafas-client via WebSockets.",
+	"version": "1.0.0",
+	"main": "index.js",
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"hafas-client",
+		"hafas",
+		"json-rpc",
+		"rpc",
+		"websocket",
+		"ws",
+		"server",
+		"client"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/hafas-client-rpc",
+	"repository": "derhuerst/hafas-client-rpc",
+	"bugs": "https://github.com/derhuerst/hafas-client-rpc/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+	},
+	"scripts": {
+		"test": "env NODE_ENV=dev node test.js",
+		"prepublishOnly": "npm test"
+	}
+}
