@@ -1,8 +1,33 @@
 'use strict'
 
-const test = require('tape')
+const http = require('http')
+const assert = require('assert')
 
-const todo = require('.')
+const exposeHafasClient = require('./server')
+const createClient = require('./client')
 
-test('todo', (t) => {
+const departures = (id) => {
+	assert.strictEqual('string', typeof id)
+	assert.ok(!!id)
+	return Promise.resolve([])
+}
+const mockHafas = {departures}
+
+const httpServer = http.createServer()
+httpServer.listen(3000)
+const server = exposeHafasClient(httpServer, mockHafas)
+
+const onError = (err) => {
+	console.error(err)
+	process.exitCode = 1
+}
+
+const ws = createClient('ws://localhost:3000', onError, (hafas) => {
+	hafas.departures('900000009102')
+	.then((res) => {
+		assert.ok(Array.isArray(res))
+		ws.close()
+		httpServer.close()
+	})
+	.catch(onError)
 })
