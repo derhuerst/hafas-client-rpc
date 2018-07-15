@@ -43,6 +43,8 @@ const exposeHafasClient = (httpServer, hafas) => {
 			const req = jsonrpc.parse(msg)
 			onRequest(req, respond)
 		})
+
+		client.addEventListener('ping', data => client.pong(data))
 	})
 
 	return wsServer
