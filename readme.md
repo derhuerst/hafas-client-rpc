@@ -1,6 +1,6 @@
 # hafas-client-rpc
 
-**Make [JSON-RPC](https://www.jsonrpc.org/) calls to [`hafas-client`](https://github.com/public-transport/hafas-client) via [WebSockets](https://en.wikipedia.org/wiki/WebSocket).**
+**Make [JSON-RPC](https://www.jsonrpc.org/) calls to [`hafas-client`](https://github.com/public-transport/hafas-client) via [WebSockets](https://en.wikipedia.org/wiki/WebSocket).** Supports reconnecting and load-balancing via [`websocket-pool`](https://github.com/derhuerst/websocket-pool#websocket-pool).
 
 [![npm version](https://img.shields.io/npm/v/hafas-client-rpc.svg)](https://www.npmjs.com/package/hafas-client-rpc)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-client-rpc.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-client-rpc)
@@ -34,15 +34,25 @@ const server = exposeHafasClient(httpServer, hafas)
 
 ```js
 // client.js
+const {RoundRobin} = require('square-batman')
 const createClient = require('hafas-client-rpc/client')
 
-const onError = console.error
+// square-batman is not abstract-scheduler-compatible yet
+const createScheduler = (urls) => {
+	const scheduler = new RoundRobin(urls)
+	scheduler.get = scheduler.next
+	return scheduler
+}
 
-createClient('ws://server-address:3000', onError, (hafas) => {
+const pool = createClient(createScheduler, [
+	'ws://server-address:3000'
+	// pass more addresses here if you want
+], (_, hafas) => {
 	hafas.departures('900000009102')
 	.then(console.log)
 	.catch(console.error)
 })
+pool.on('error', console.error)
 ```
 
 

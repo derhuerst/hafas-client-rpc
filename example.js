@@ -3,6 +3,7 @@
 const http = require('http')
 const createHafas = require('hafas-client')
 const vbbProfile = require('hafas-client/p/vbb')
+const {RoundRobin} = require('square-batman')
 
 const exposeHafasClient = require('./server')
 const createClient = require('./client')
@@ -17,10 +18,18 @@ const server = exposeHafasClient(httpServer, hafas)
 
 // client
 
-const onError = console.error
+// square-batman is not abstract-scheduler-compatible yet
+const createScheduler = (urls) => {
+	const scheduler = new RoundRobin(urls)
+	scheduler.get = scheduler.next
+	return scheduler
+}
 
-createClient('ws://localhost:3000', onError, (hafas) => {
+const pool = createClient(createScheduler, [
+	'ws://localhost:3000'
+], (_, hafas) => {
 	hafas.departures('900000009102')
 	.then(console.log)
 	.catch(console.error)
 })
+pool.on('error', console.error)
