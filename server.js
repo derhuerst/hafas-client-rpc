@@ -2,6 +2,7 @@
 
 const {Server} = require('ws')
 const jsonrpc = require('jsonrpc-lite')
+const omit = require('lodash.omit')
 
 const paramsNotAnArray = new jsonrpc.JsonRpcError(`\
 params must be an array`, '1')
@@ -17,8 +18,9 @@ const exposeHafasClient = (httpServer, hafas) => {
 
 		const onError = (err) => {
 			const msg = err && err.message || (err + '')
-			err = new jsonrpc.JsonRpcError(msg, err.code || '3')
-			respond(jsonrpc.error(id, err))
+			const data = omit(Object.assign({}, err), ['message', 'code'])
+			const wrapped = new jsonrpc.JsonRpcError(msg, err.code || '3', data)
+			respond(jsonrpc.error(id, wrapped))
 		}
 		try {
 			if ('function' !== typeof hafas[method]) throw invalidMethod

@@ -35,7 +35,13 @@ const createClient = (createScheduler, urls, cb) => {
 		if (!res || !res.payload) return;
 		const handler = handlers[res.payload.id]
 		if (!handler) return;
-		if ('error' in res.payload) handler[1](res.payload.error)
+		if ('error' in res.payload) {
+			const err = res.payload.error
+			const data = err.data
+			delete err.data
+			Object.assign(err, data)
+			handler[1](err)
+		}
 		else if ('result' in res.payload) handler[0](res.payload.result)
 	}
 	pool.on('message', onMessage)
