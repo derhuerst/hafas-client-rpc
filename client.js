@@ -16,6 +16,9 @@ const methods = [
 	'radar'
 ]
 
+const errorsInARow = Symbol('errorsInARow')
+const maxErrorsInArow = 3
+
 // todo: kill WebSocket on HAFAS errors
 const createClient = (createScheduler, urls, cb) => {
 	if (!Array.isArray(urls)) throw new Error('urls must be an array')
@@ -30,19 +33,31 @@ const createClient = (createScheduler, urls, cb) => {
 
 	const handlers = Object.create(null) // by msg ID
 
-	const onMessage = (msg) => {
+	pool.on('connection-open', (ws) => {
+		ws[errorsInARow] = 0
+	})
+
+	const onMessage = (msg, ws) => {
 		const res = parse(msg.data)
 		if (!res || !res.payload) return;
 		const handler = handlers[res.payload.id]
 		if (!handler) return;
+
 		if ('error' in res.payload) {
 			const err = res.payload.error
 			const data = err.data
 			delete err.data
 			Object.assign(err, data)
 			handler[1](err)
+
+			if (!err.isHafasError) {
+				ws[errorsInARow]++
+				if (ws[errorsInARow] > maxErrorsInArow) ws.close()
+			}
+		} else if ('result' in res.payload) {
+			ws[errorsInARow] = 0
+			handler[0](res.payload.result)
 		}
-		else if ('result' in res.payload) handler[0](res.payload.result)
 	}
 	pool.on('message', onMessage)
 
