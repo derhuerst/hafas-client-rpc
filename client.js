@@ -4,6 +4,7 @@ const createPool = require('websocket-pool')
 const WebSocket = require('ws')
 const {parse, request} = require('jsonrpc-lite')
 const customInspect = require('util').inspect.custom
+const debug = require('debug')('hafas-client-rpc:client')
 
 // https://github.com/public-transport/hafas-client/blob/31973431ff1a0289e58fb8f4ab308bb1d36a0b92/index.js#L415-L419
 const methods = [
@@ -27,7 +28,8 @@ const createClient = (createScheduler, urls, cb) => {
 		retry: {
 			forever: true,
 			factor: 1.5,
-			minTimeout: 10000
+			minTimeout: 10 * 1000,
+			maxTimeout: 10 * 60 * 1000
 		}
 	})
 
@@ -52,6 +54,7 @@ const createClient = (createScheduler, urls, cb) => {
 
 			if (!err.isHafasError) {
 				ws[errorsInARow]++
+				debug(ws.url, ws[errorsInARow], 'non-HAFAS errors in a row')
 				if (ws[errorsInARow] > maxErrorsInArow) ws.close()
 			}
 		} else if ('result' in res.payload) {
