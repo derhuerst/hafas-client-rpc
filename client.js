@@ -3,6 +3,18 @@
 const createPool = require('websocket-pool')
 const WebSocket = require('ws')
 const {parse, request} = require('jsonrpc-lite')
+const customInspect = require('util').inspect.custom
+
+// https://github.com/public-transport/hafas-client/blob/31973431ff1a0289e58fb8f4ab308bb1d36a0b92/index.js#L415-L419
+const methods = [
+	'departures', 'arrivals',
+	'journeys',
+	'locations',
+	'station',
+	'nearby',
+	'journeyLeg',
+	'radar'
+]
 
 // todo: kill WebSocket on HAFAS errors
 const createClient = (createScheduler, urls, cb) => {
@@ -38,8 +50,13 @@ const createClient = (createScheduler, urls, cb) => {
 		})
 	}
 
-	const get = (_, prop) => (...params) => call(prop, params)
-	const facade = new Proxy(Object.create(null), {get})
+	const inspect = (_, opt) => opt.stylize('[hafas-client-rpc]', 'special')
+	const get = (target, prop) => {
+		if (prop === customInspect) return inspect
+		if (!methods.includes(prop)) return undefined
+		return (...params) => call(prop, params)
+	}
+	const facade = new Proxy({}, {get})
 
 	for (let url of urls) pool.add(url)
 	pool.once('open', () => cb(null, facade))
