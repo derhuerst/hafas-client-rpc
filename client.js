@@ -20,7 +20,6 @@ const methods = [
 const errorsInARow = Symbol('errorsInARow')
 const maxErrorsInArow = 3
 
-// todo: kill WebSocket on HAFAS errors
 const createClient = (createScheduler, urls, cb) => {
 	if (!Array.isArray(urls)) throw new Error('urls must be an array')
 
@@ -75,12 +74,18 @@ const createClient = (createScheduler, urls, cb) => {
 	}
 
 	const inspect = (_, opt) => opt.stylize('[hafas-client-rpc]', 'special')
-	const get = (target, prop) => {
+	const getProp = (target, prop) => {
 		if (prop === customInspect) return inspect
-		if (!methods.includes(prop)) return undefined
-		return (...params) => call(prop, params)
+		if (methods.includes(prop)) {
+			return (...params) => call(prop, params)
+		}
+		return 'string' === typeof prop ? target[prop] : undefined
 	}
-	const facade = new Proxy({}, {get})
+	const setProp = (target, prop, val) => {
+		target[prop] = val
+		return val
+	}
+	const facade = new Proxy({}, {get: getProp, set: setProp})
 
 	for (let url of urls) pool.add(url)
 	pool.once('open', () => cb(null, facade))
