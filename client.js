@@ -6,6 +6,8 @@ const {parse, request} = require('jsonrpc-lite')
 const customInspect = require('util').inspect.custom
 const debug = require('debug')('hafas-client-rpc:client')
 
+const noConnectionAvailable = createPool.noConnectionAvailable.code
+
 // https://github.com/public-transport/hafas-client/blob/31973431ff1a0289e58fb8f4ab308bb1d36a0b92/index.js#L415-L419
 const methods = [
 	'departures', 'arrivals',
@@ -69,7 +71,12 @@ const createClient = (createScheduler, urls, cb) => {
 		const msg = request(id, method, params)
 		return new Promise((resolve, reject) => {
 			handlers[id] = [resolve, reject]
-			pool.send(msg + '')
+			try {
+				pool.send(msg + '')
+			} catch (err) {
+				if (err && err.code === noConnectionAvailable) err.statusCode = 503
+				throw err
+			}
 		})
 	}
 
