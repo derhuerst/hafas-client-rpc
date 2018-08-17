@@ -12,10 +12,12 @@ const noConnectionAvailable = createPool.noConnectionAvailable.code
 const methods = [
 	'departures', 'arrivals',
 	'journeys',
+	'refreshJourney', // new `hafas-client@3`
 	'locations',
 	'station',
 	'nearby',
-	'journeyLeg',
+	'journeyLeg', // old `hafas-client@3`
+	'trip', // new `hafas-client@3`
 	'radar'
 ]
 

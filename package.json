@@ -1,7 +1,7 @@
 {
 	"name": "hafas-client-rpc",
 	"description": "Make JSON-RPC calls to hafas-client via WebSockets.",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -35,7 +35,10 @@
 		"ws": "^5.2.2"
 	},
 	"devDependencies": {
-		"hafas-client": "^3.0.0-alpha.17"
+		"hafas-client": "^3.0.0"
+	},
+	"peerDependencies": {
+		"hafas-client": "^3.0.0"
 	},
 	"scripts": {
 		"test": "env NODE_ENV=dev node test.js",

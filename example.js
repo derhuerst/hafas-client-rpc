@@ -13,7 +13,7 @@ const createClient = require('./client')
 const httpServer = http.createServer()
 httpServer.listen(3000)
 
-const hafas = createHafas(vbbProfile)
+const hafas = createHafas(vbbProfile, 'hafas-client-rpc example')
 const server = exposeHafasClient(httpServer, hafas)
 
 // client
