@@ -1,6 +1,8 @@
 # hafas-client-rpc
 
-**Make [JSON-RPC](https://www.jsonrpc.org/) calls to [`hafas-client`](https://github.com/public-transport/hafas-client) via [WebSockets](https://en.wikipedia.org/wiki/WebSocket).** Supports reconnecting and load-balancing via [`websocket-pool`](https://github.com/derhuerst/websocket-pool#websocket-pool).
+**Make [JSON-RPC](https://www.jsonrpc.org/) calls to [`hafas-client`](https://github.com/public-transport/hafas-client)** via
+
+- [WebSockets](https://en.wikipedia.org/wiki/WebSocket) – Supports reconnecting and load-balancing via [`websocket-pool`](https://github.com/derhuerst/websocket-pool#websocket-pool).
 
 [![npm version](https://img.shields.io/npm/v/hafas-client-rpc.svg)](https://www.npmjs.com/package/hafas-client-rpc)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-client-rpc.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-client-rpc)
@@ -18,12 +20,14 @@ npm install hafas-client-rpc
 
 ## Usage
 
+### via [WebSockets](https://en.wikipedia.org/wiki/WebSocket) transport
+
 ```js
 // server.js
 const http = require('http')
 const createHafas = require('hafas-client')
 const vbbProfile = require('hafas-client/p/vbb')
-const exposeHafasClient = require('hafas-client-rpc/server')
+const exposeHafasClient = require('hafas-client-rpc/ws/server')
 
 const httpServer = http.createServer()
 httpServer.listen(3000)
@@ -35,7 +39,7 @@ const server = exposeHafasClient(httpServer, hafas)
 ```js
 // client.js
 const createRoundRobin = require('@derhuerst/round-robin-scheduler')
-const createClient = require('hafas-client-rpc/client')
+const createClient = require('hafas-client-rpc/ws/client')
 
 const pool = createClient(createRoundRobin, [
 	'ws://server-address:3000'

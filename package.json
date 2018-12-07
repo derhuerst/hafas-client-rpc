@@ -6,7 +6,8 @@
 	"files": [
 		"index.js",
 		"ws",
-		"lib"
+		"lib",
+		"examples"
 	],
 	"keywords": [
 		"hafas-client",
@@ -41,7 +42,7 @@
 		"hafas-client": "^3.0.0"
 	},
 	"scripts": {
-		"test": "env NODE_ENV=dev node test.js",
+		"test": "env NODE_ENV=dev node test/index.js",
 		"prepublishOnly": "npm test"
 	}
 }
