@@ -6,7 +6,8 @@
 	"files": [
 		"index.js",
 		"client.js",
-		"server.js"
+		"server.js",
+		"lib"
 	],
 	"keywords": [
 		"hafas-client",
