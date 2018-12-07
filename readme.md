@@ -34,17 +34,10 @@ const server = exposeHafasClient(httpServer, hafas)
 
 ```js
 // client.js
-const {RoundRobin} = require('square-batman')
+const createRoundRobin = require('@derhuerst/round-robin-scheduler')
 const createClient = require('hafas-client-rpc/client')
 
-// square-batman is not abstract-scheduler-compatible yet
-const createScheduler = (urls) => {
-	const scheduler = new RoundRobin(urls)
-	scheduler.get = scheduler.next
-	return scheduler
-}
-
-const pool = createClient(createScheduler, [
+const pool = createClient(createRoundRobin, [
 	'ws://server-address:3000'
 	// pass more addresses here if you want
 ], (_, hafas) => {
