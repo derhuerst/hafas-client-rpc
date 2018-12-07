@@ -2,14 +2,14 @@
 
 const createPool = require('websocket-pool')
 const WebSocket = require('ws')
-const debug = require('debug')('hafas-client-rpc:client')
-const createClientAdapter = require('./lib/client-adapter')
+const debug = require('debug')('hafas-client-rpc:ws-client')
+const createClientAdapter = require('../lib/client-adapter')
 
 const maxErrorsInArow = 3
 
 const noConnectionAvailable = createPool.noConnectionAvailable.code
 
-const createClient = (createScheduler, urls, cb) => {
+const createWebSocketsRpcClient = (createScheduler, urls, cb) => {
 	if (!Array.isArray(urls)) throw new Error('urls must be an array')
 
 	const pool = createPool(WebSocket, createScheduler, {
@@ -41,4 +41,4 @@ const createClient = (createScheduler, urls, cb) => {
 	return pool
 }
 
-module.exports = createClient
+module.exports = createWebSocketsRpcClient
