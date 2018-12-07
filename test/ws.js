@@ -4,8 +4,8 @@ const http = require('http')
 const assert = require('assert')
 const createRoundRobin = require('@derhuerst/round-robin-scheduler')
 
-const exposeHafasClient = require('./server')
-const createClient = require('./client')
+const exposeHafasClientViaWebSockets = require('../ws/server')
+const createWebSocketsClient = require('../ws/client')
 
 const departures = (id) => {
 	assert.strictEqual('string', typeof id)
@@ -16,14 +16,14 @@ const mockHafas = {departures}
 
 const httpServer = http.createServer()
 httpServer.listen(3000)
-const server = exposeHafasClient(httpServer, mockHafas)
+const server = exposeHafasClientViaWebSockets(httpServer, mockHafas)
 
 const onError = (err) => {
 	console.error(err)
 	process.exitCode = 1
 }
 
-const pool = createClient(createRoundRobin, [
+const pool = createWebSocketsClient(createRoundRobin, [
 	'ws://localhost:3000'
 ], (_, hafas) => {
 	hafas.departures('900000009102')
