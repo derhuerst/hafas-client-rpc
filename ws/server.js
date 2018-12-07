@@ -1,9 +1,9 @@
 'use strict'
 
 const {Server} = require('ws')
-const createServerAdapter = require('./lib/server-adapter')
+const createServerAdapter = require('../lib/server-adapter')
 
-const exposeHafasClient = (httpServer, hafas) => {
+const exposeHafasClientViaWebSockets = (httpServer, hafas) => {
 	const onMessage = createServerAdapter(hafas)
 
 	const wsServer = new Server({server: httpServer})
@@ -17,4 +17,4 @@ const exposeHafasClient = (httpServer, hafas) => {
 	return wsServer
 }
 
-module.exports = exposeHafasClient
+module.exports = exposeHafasClientViaWebSockets

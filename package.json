@@ -5,8 +5,7 @@
 	"main": "index.js",
 	"files": [
 		"index.js",
-		"client.js",
-		"server.js",
+		"ws",
 		"lib"
 	],
 	"keywords": [
