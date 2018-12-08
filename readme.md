@@ -78,6 +78,32 @@ createClient('path/to/stdio/server.js', (_, hafas) => {
 })
 ```
 
+#### with other languages
+
+Spawn the stdio RPC server as a sub process of your script:
+
+```shell
+node node_modules/hafas-client-rpc/stdio/simple-server.js
+```
+
+Send [JSON-RPC](todo) 2.0 calls via `stdin`:
+
+```json
+{"jsonrpc":"2.0","id":"1","method":"departures","params":["900000009102"]}
+```
+
+On success, you will receive the result via `stdout`:
+
+```json
+{"jsonrpc":"2.0","id":"1","result":[{"tripId":"1|32623|3|86|8122018", …}]}
+```
+
+If an error occurs, you will receive it via `stderr`:
+
+```json
+{"jsonrpc":"2.0","id":"1","error":{"message":"station ID must be a valid IBNR.","code":0,"data":{}}}
+```
+
 
 ## Related
 
