@@ -52,6 +52,32 @@ const pool = createClient(createRoundRobin, [
 pool.on('error', console.error)
 ```
 
+### via stdio transport
+
+```js
+// server.js
+const createHafas = require('hafas-client')
+const vbbProfile = require('hafas-client/p/vbb')
+const exposeViaStdio = require('hafas-client-rpc/stdio/server')
+
+const hafas = createHafas(vbbProfile, 'my-awesome-program')
+
+exposeViaStdio(hafas)
+```
+
+Creating a client *in Node* doesn't make sense, because you could just use `hafas-client` directly. You would usually write the client in another language. For demonstration purposes, a Node client:
+
+```js
+// client.js
+const createClient = require('hafas-client-rpc/stdio/client')
+
+createClient('path/to/stdio/server.js', (_, hafas) => {
+	hafas.departures('900000009102')
+	.then(console.log)
+	.catch(console.error)
+})
+```
+
 
 ## Related
 
