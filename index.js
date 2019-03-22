@@ -1,6 +1,9 @@
 'use strict'
 
-const client = require('./client')
-const server = require('./server')
+const client = require('./ws/client')
+const server = require('./ws/server')
+const stdioClient = require('./ws/client')
+const stdioServer = require('./ws/server')
 
-module.exports = {client, server}
+// todo: remove this file
+module.exports = {client, server, stdioClient, stdioServer}
