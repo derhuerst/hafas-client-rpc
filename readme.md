@@ -3,6 +3,7 @@
 **Make [JSON-RPC](https://www.jsonrpc.org/) calls to [`hafas-client`](https://github.com/public-transport/hafas-client)** via
 
 - [WebSockets](https://en.wikipedia.org/wiki/WebSocket) – Supports reconnecting and load-balancing via [`websocket-pool`](https://github.com/derhuerst/websocket-pool#websocket-pool).
+- [`stdin`/`stdout`](https://en.wikipedia.org/wiki/Standard_streams)
 
 [![npm version](https://img.shields.io/npm/v/hafas-client-rpc.svg)](https://www.npmjs.com/package/hafas-client-rpc)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-client-rpc.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-client-rpc)
@@ -52,7 +53,7 @@ const pool = createClient(createRoundRobin, [
 pool.on('error', console.error)
 ```
 
-### via stdio transport
+### via [`stdin`/`stdout`](https://en.wikipedia.org/wiki/Standard_streams) transport
 
 ```js
 // server.js
