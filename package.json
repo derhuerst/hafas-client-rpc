@@ -44,7 +44,7 @@
 	},
 	"devDependencies": {
 		"@derhuerst/round-robin-scheduler": "^1.0.1",
-		"hafas-client": "^3.0.0"
+		"hafas-client": "^4.0.1"
 	},
 	"peerDependencies": {
 		"hafas-client": "^3.0.0"
