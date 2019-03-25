@@ -2,7 +2,6 @@
 
 const createPool = require('websocket-pool')
 const WebSocket = require('isomorphic-ws')
-const debug = require('debug')('hafas-client-rpc:ws-client')
 const createClientAdapter = require('../lib/client-adapter')
 
 const maxErrorsInArow = 3
