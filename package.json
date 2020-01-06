@@ -29,25 +29,25 @@
 	"bugs": "https://github.com/derhuerst/hafas-client-rpc/issues",
 	"license": "ISC",
 	"engines": {
-		"node": ">=6"
+		"node": ">=10"
 	},
 	"dependencies": {
 		"debug": "^4.1.1",
-		"execa": "^1.0.0",
+		"execa": "^4.0.0",
 		"isomorphic-ws": "^4.0.1",
 		"jsonrpc-lite": "^2.0.5",
 		"lodash.omit": "^4.5.0",
 		"pump": "^3.0.0",
 		"stream-lines": "^1.2.0",
 		"websocket-pool": "^1.3.1",
-		"ws": "^6.2.0"
+		"ws": "^7.2.1"
 	},
 	"devDependencies": {
 		"@derhuerst/round-robin-scheduler": "^1.0.1",
-		"hafas-client": "^4.0.1"
+		"hafas-client": "^5.0.0"
 	},
 	"peerDependencies": {
-		"hafas-client": "^2 || ^3 || ^4"
+		"hafas-client": "^2 || ^3 || ^4 || ^5"
 	},
 	"scripts": {
 		"test": "env NODE_ENV=dev node test/index.js",
