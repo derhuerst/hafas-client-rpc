@@ -1,56 +1,60 @@
 {
-	"name": "hafas-client-rpc",
-	"description": "Make JSON-RPC calls to hafas-client via WebSockets & stdio.",
-	"version": "4.0.0",
-	"main": "index.js",
-	"files": [
-		"index.js",
-		"ws",
-		"stdio",
-		"lib",
-		"examples"
-	],
-	"keywords": [
-		"hafas-client",
-		"hafas",
-		"json-rpc",
-		"rpc",
-		"websocket",
-		"ws",
-		"stdio",
-		"stdin",
-		"stdout",
-		"server",
-		"client"
-	],
-	"author": "Jannis R <mail@jannisr.de>",
-	"homepage": "https://github.com/derhuerst/hafas-client-rpc",
-	"repository": "derhuerst/hafas-client-rpc",
-	"bugs": "https://github.com/derhuerst/hafas-client-rpc/issues",
-	"license": "ISC",
-	"engines": {
-		"node": ">=10"
-	},
-	"dependencies": {
-		"debug": "^4.1.1",
-		"execa": "^4.0.0",
-		"isomorphic-ws": "^4.0.1",
-		"jsonrpc-lite": "^2.0.5",
-		"lodash.omit": "^4.5.0",
-		"pump": "^3.0.0",
-		"stream-lines": "^1.2.0",
-		"websocket-pool": "^1.3.1",
-		"ws": "^7.2.1"
-	},
-	"devDependencies": {
-		"@derhuerst/round-robin-scheduler": "^1.0.1",
-		"hafas-client": "^5.0.0"
-	},
-	"peerDependencies": {
-		"hafas-client": "^2 || ^3 || ^4 || ^5"
-	},
-	"scripts": {
-		"test": "env NODE_ENV=dev node test/index.js",
-		"prepublishOnly": "npm test"
-	}
+  "name": "hafas-client-rpc",
+  "description": "Make JSON-RPC calls to hafas-client via WebSockets & stdio.",
+  "version": "4.0.0",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "ws",
+    "stdio",
+    "lib",
+    "examples"
+  ],
+  "keywords": [
+    "hafas-client",
+    "hafas",
+    "json-rpc",
+    "rpc",
+    "websocket",
+    "ws",
+    "stdio",
+    "stdin",
+    "stdout",
+    "server",
+    "client"
+  ],
+  "author": "Jannis R <mail@jannisr.de>",
+  "homepage": "https://github.com/derhuerst/hafas-client-rpc",
+  "repository": "derhuerst/hafas-client-rpc",
+  "bugs": "https://github.com/derhuerst/hafas-client-rpc/issues",
+  "license": "ISC",
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "execa": "^4.0.0",
+    "isomorphic-ws": "^4.0.1",
+    "jsonrpc-lite": "^2.0.5",
+    "lodash.omit": "^4.5.0",
+    "pump": "^3.0.0",
+    "stream-lines": "^1.2.0",
+    "websocket-pool": "^1.3.1",
+    "ws": "^7.2.1",
+    "snyk": "^1.320.2"
+  },
+  "devDependencies": {
+    "@derhuerst/round-robin-scheduler": "^1.0.1",
+    "hafas-client": "^5.0.0"
+  },
+  "peerDependencies": {
+    "hafas-client": "^2 || ^3 || ^4 || ^5"
+  },
+  "scripts": {
+    "test": "env NODE_ENV=dev node test/index.js",
+    "prepublishOnly": "npm test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
