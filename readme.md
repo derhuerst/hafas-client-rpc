@@ -21,7 +21,11 @@ npm install hafas-client-rpc
 
 ## Usage
 
+`hafas-client-rpc` has multiple transports. Each of them has a client part (which sends commands to make HAFAS calls) and a server (which executes the HAFAS calls).
+
 ### via [WebSockets](https://en.wikipedia.org/wiki/WebSocket) transport
+
+With this transport, the server part is an actual WebSockets server, and the client connects to it.
 
 ```js
 // server.js
@@ -55,6 +59,8 @@ pool.on('error', console.error)
 
 ### via [`stdin`/`stdout`](https://en.wikipedia.org/wiki/Standard_streams) transport
 
+With this transport, the client spawns the server as a sub-process and sends commands via stdio.
+
 ```js
 // server.js
 const createHafas = require('hafas-client')
@@ -66,7 +72,7 @@ const hafas = createHafas(vbbProfile, 'my-awesome-program')
 exposeViaStdio(hafas)
 ```
 
-Creating a client *in Node* doesn't make sense, because you could just use `hafas-client` directly. You would usually write the client in another language. For demonstration purposes, a Node client:
+Creating a client *in Node.js* doesn't make sense, because you could just use `hafas-client` directly. You would usually write the client in another language. For demonstration purposes, a Node client:
 
 ```js
 // client.js
