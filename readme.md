@@ -111,6 +111,33 @@ If an error occurs, you will receive it via `stderr`:
 {"jsonrpc":"2.0","id":"1","error":{"message":"station ID must be a valid IBNR.","code":0,"data":{}}}
 ```
 
+### via [NATS Streaming](https://docs.nats.io/nats-streaming-concepts/intro) transport
+
+This transport relies on two [NATS streaming channels](https://docs.nats.io/nats-streaming-concepts/channels). This allows you to have a pool of servers that fail (or even go offline) at any time, as the channel will persist all RPC requests until they're taken care of. The transport uses two [durable channels](https://docs.nats.io/nats-streaming-concepts/channels/subscriptions/durable) (one for RPC requests, the other for responses).
+
+```js
+// server.js
+const createHafas = require('hafas-client')
+const vbbProfile = require('hafas-client/p/vbb')
+const exposeViaNatsStreaming = require('hafas-client-rpc/nats-streaming/server')
+
+const hafas = createHafas(vbbProfile, 'hafas-client-rpc WebSockets example')
+exposeViaNatsStreaming(hafas, (err) => {
+	if (err) console.error(err)
+})
+```
+
+```js
+// client.js
+const createClient = require('hafas-client-rpc/nats-streaming/client')
+
+const pool = createClient((_, hafas) => {
+	hafas.departures('900000009102')
+	.then(console.log)
+	.catch(console.error)
+})
+```
+
 
 ## Related
 
