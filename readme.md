@@ -5,6 +5,7 @@
 - [WebSockets](https://en.wikipedia.org/wiki/WebSocket) – Supports reconnecting and load-balancing via [`websocket-pool`](https://github.com/derhuerst/websocket-pool#websocket-pool).
 - [`stdin`/`stdout`](https://en.wikipedia.org/wiki/Standard_streams)
 - [UNIX domain sockets](https://en.wikipedia.org/wiki/Unix_domain_socket)
+- [NATS Streaming](https://docs.nats.io/nats-streaming-concepts/intro)
 
 [![npm version](https://img.shields.io/npm/v/hafas-client-rpc.svg)](https://www.npmjs.com/package/hafas-client-rpc)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-client-rpc.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-client-rpc)
@@ -70,7 +71,9 @@ const exposeViaStdio = require('hafas-client-rpc/stdio/server')
 
 const hafas = createHafas(vbbProfile, 'my-awesome-program')
 
-exposeViaStdio(hafas)
+exposeViaStdio(hafas, (err) => {
+	console.log('hafas-client-rpc server ready')
+})
 ```
 
 Creating a client *in Node.js* doesn't make sense, because you could just use `hafas-client` directly. You would usually write the client in another language. For demonstration purposes, a Node client:
@@ -140,7 +143,7 @@ createClient((_, hafas) => {
 
 ### via [NATS Streaming](https://docs.nats.io/nats-streaming-concepts/intro) transport
 
-This transport relies on two [NATS streaming channels](https://docs.nats.io/nats-streaming-concepts/channels). This allows you to have a pool of servers that fail (or even go offline) at any time, as the channel will persist all RPC requests until they're taken care of. The transport uses two [durable channels](https://docs.nats.io/nats-streaming-concepts/channels/subscriptions/durable) (one for RPC requests, the other for responses).
+This transport relies on [NATS streaming channels](https://docs.nats.io/nats-streaming-concepts/channels). This allows you to have a pool of servers where an individual server can go offline at any time, as the channel will persist all RPC requests until they're taken care of. The transport uses two [durable channels](https://docs.nats.io/nats-streaming-concepts/channels/subscriptions/durable) (one for RPC requests, the other for responses).
 
 ```js
 // server.js
