@@ -1,6 +1,5 @@
 'use strict'
 
-const {Server} = require('ws')
 const createServerAdapter = require('../lib/server-adapter')
 const pump = require('pump')
 const {Transform} = require('stream')
