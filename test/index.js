@@ -2,3 +2,4 @@
 
 require('./ws')
 require('./stdio')
+require('./socket')

@@ -4,6 +4,7 @@
 
 - [WebSockets](https://en.wikipedia.org/wiki/WebSocket) – Supports reconnecting and load-balancing via [`websocket-pool`](https://github.com/derhuerst/websocket-pool#websocket-pool).
 - [`stdin`/`stdout`](https://en.wikipedia.org/wiki/Standard_streams)
+- [UNIX domain sockets](https://en.wikipedia.org/wiki/Unix_domain_socket)
 
 [![npm version](https://img.shields.io/npm/v/hafas-client-rpc.svg)](https://www.npmjs.com/package/hafas-client-rpc)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-client-rpc.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-client-rpc)
@@ -109,6 +110,32 @@ If an error occurs, you will receive it via `stderr`:
 
 ```json
 {"jsonrpc":"2.0","id":"1","error":{"message":"station ID must be a valid IBNR.","code":0,"data":{}}}
+```
+
+### via [UNIX domain sockets](https://en.wikipedia.org/wiki/Unix_domain_socket)
+
+With this transport, both client & server connect to a local TCP socket `/tmp/hafas-client-rpc-{version}`.
+
+```js
+// server.js
+const createHafas = require('hafas-client')
+const vbbProfile = require('hafas-client/p/vbb')
+const exposeViaSocket = require('hafas-client-rpc/socket/server')
+
+const hafas = createHafas(vbbProfile, 'my-awesome-program')
+
+exposeViaSocket(hafas)
+```
+
+```js
+// client.js
+const createClient = require('hafas-client-rpc/socket/client')
+
+createClient((_, hafas) => {
+	hafas.departures('900000009102')
+	.then(console.log)
+	.catch(console.error)
+})
 ```
 
 ### via [NATS Streaming](https://docs.nats.io/nats-streaming-concepts/intro) transport
