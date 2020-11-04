@@ -29,6 +29,8 @@ const pool = createWebSocketsClient(createRoundRobin, [
 	hafas.departures('900000009102')
 	.then((res) => {
 		assert.ok(Array.isArray(res))
+		console.info('ws adapter works ✔︎')
+
 		pool.close()
 		httpServer.close()
 	})

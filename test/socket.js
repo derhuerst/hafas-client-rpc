@@ -30,6 +30,8 @@ const {
 		hafas.departures('900000009102')
 		.then((res) => {
 			assert.ok(Array.isArray(res))
+			console.info('socket adapter works ✔︎')
+
 			closeClient()
 			closeServer()
 		})

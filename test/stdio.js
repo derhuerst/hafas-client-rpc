@@ -15,6 +15,8 @@ const facade = createStdioClient(pathToMockServer, (_, hafas) => {
 	hafas.departures('900000009102')
 	.then((res) => {
 		assert.deepStrictEqual(res, ['mock'])
+		console.info('stdio adapter works ✔︎')
+
 		facade.close()
 	})
 	.catch(onError)
