@@ -10,8 +10,8 @@
 [![npm version](https://img.shields.io/npm/v/hafas-client-rpc.svg)](https://www.npmjs.com/package/hafas-client-rpc)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-client-rpc.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-client-rpc)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/hafas-client-rpc.svg)
-[![chat with me on Gitter](https://img.shields.io/badge/chat%20with%20me-on%20gitter-512e92.svg)](https://gitter.im/derhuerst)
-[![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
+[![support me via GitHub Sponsors](https://img.shields.io/badge/support%20me-donate-fa7664.svg)](https://github.com/sponsors/derhuerst)
+[![chat with me on Twitter](https://img.shields.io/badge/chat%20with%20me-on%20Twitter-1da1f2.svg)](https://twitter.com/derhuerst)
 
 
 ## Installation
@@ -57,6 +57,12 @@ const pool = createClient(createRoundRobin, [
 	.catch(console.error)
 })
 pool.on('error', console.error)
+```
+
+Or using the [`websocat` command-line WebSocket client](https://github.com/vi/websocat):
+
+```shell
+echo 'departures 900000009102' | websocat --jsonrpc 'ws://server-address:3000'
 ```
 
 ### via [`stdin`/`stdout`](https://en.wikipedia.org/wiki/Standard_streams) transport
@@ -167,6 +173,10 @@ const pool = createClient((_, hafas) => {
 	.catch(console.error)
 })
 ```
+
+### Caveats
+
+- `hafas-client` exposes the used [*profile*](https://github.com/public-transport/hafas-client/tree/95af0a012767827347fbb8b0c36053cb767cf192/p) as `hafasClient.profile`, but because *profiles* consist of JavaScript functions, which can't be serialized properley, the `hafas-client-rpc` facade *does not* expose `.profile`.
 
 
 ## Related
