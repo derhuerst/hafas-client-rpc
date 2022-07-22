@@ -9,10 +9,14 @@ const exposeHafasClientViaWebSockets = (httpServer, hafas) => {
 	const wsServer = new Server({server: httpServer})
 	wsServer.on('connection', (client) => {
 		const respond = msg => client.send(msg + '')
-		client.on('message', (msg) => onMessage(msg, respond))
+		client.on('message', (msg) => onMessage(msg + '', respond))
 
 		client.addEventListener('ping', data => client.pong(data))
 	})
+
+	// todo: close fn?
+	// websocketServer.close();
+	// for (const ws of websocketServer.clients) ws.terminate()
 
 	return wsServer
 }

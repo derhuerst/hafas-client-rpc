@@ -32,7 +32,7 @@ const createWebSocketsRpcClient = (createScheduler, urls, cb) => {
 
 	pool.on('connection-open', onConnection)
 	pool.on('message', (msg, connection) => {
-		onMessage(msg.data, connection)
+		onMessage(msg.data + '', connection)
 	})
 
 	for (let url of urls) pool.add(url)
