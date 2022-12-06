@@ -30,7 +30,7 @@
 	"bugs": "https://github.com/derhuerst/hafas-client-rpc/issues",
 	"license": "ISC",
 	"engines": {
-		"node": ">=10"
+		"node": ">=16"
 	},
 	"dependencies": {
 		"debug": "^4.1.1",
