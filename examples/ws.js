@@ -14,6 +14,7 @@ const httpServer = http.createServer()
 httpServer.listen(3000)
 
 const hafas = createHafas(vbbProfile, 'hafas-client-rpc WebSockets example')
+// eslint-disable-next-line no-unused-vars
 const server = exposeHafasClient(httpServer, hafas)
 
 // client

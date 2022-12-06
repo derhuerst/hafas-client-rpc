@@ -16,6 +16,7 @@ const mockHafas = {departures}
 
 const httpServer = http.createServer()
 httpServer.listen(3000)
+// eslint-disable-next-line no-unused-vars
 const server = exposeHafasClientViaWebSockets(httpServer, mockHafas)
 
 const onError = (err) => {

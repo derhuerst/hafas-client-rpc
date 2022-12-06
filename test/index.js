@@ -1,6 +1,6 @@
 'use strict'
 
-const {strictEqual, deepStrictEqual} = require('assert')
+const {strictEqual} = require('assert')
 const {
 	CACHED, CACHE_TIME,
 	encodeCachingFields,

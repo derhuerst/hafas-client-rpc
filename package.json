@@ -46,6 +46,7 @@
 	},
 	"devDependencies": {
 		"@derhuerst/round-robin-scheduler": "^1.0.1",
+		"eslint": "^8.29.0",
 		"hafas-client": "^5.0.0",
 		"nats-streaming-cli": "^1.0.2"
 	},
@@ -53,7 +54,8 @@
 		"hafas-client": "^5"
 	},
 	"scripts": {
+		"lint": "eslint .",
 		"test": "env NODE_ENV=dev node test/index.js",
-		"prepublishOnly": "npm test"
+		"prepublishOnly": "npm run lint && npm test"
 	}
 }

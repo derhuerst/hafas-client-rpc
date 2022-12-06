@@ -15,6 +15,7 @@ const onError = (err) => {
 // server
 
 const hafas = createHafas(vbbProfile, 'hafas-client-rpc WebSockets example')
+// eslint-disable-next-line no-unused-vars
 const server = exposeHafasClient(hafas, onError)
 
 // client

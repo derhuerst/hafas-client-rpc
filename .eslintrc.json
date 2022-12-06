@@ -1,0 +1,22 @@
+{
+	"extends": "eslint:recommended",
+	"env": {
+		"es2022": true,
+		"node": true
+	},
+	"parserOptions": {
+	},
+	"ignorePatterns": [
+		"node_modules"
+	],
+	"rules": {
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none",
+                "ignoreRestSiblings": false
+            }
+        ]
+	}
+}
