@@ -1,7 +1,7 @@
 {
 	"name": "hafas-client-rpc",
 	"description": "Make JSON-RPC calls to hafas-client via WebSockets, stdio, UNIX domain sockets & NATS streaming.",
-	"version": "4.4.0",
+	"version": "4.4.1",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"debug": "^4.1.1",
-		"execa": "^4.0.0",
+		"execa": "^5.1.1",
 		"isomorphic-ws": "^5.0.0",
 		"jsonrpc-lite": "^2.0.5",
 		"lodash.omit": "^4.5.0",
