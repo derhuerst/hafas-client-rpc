@@ -50,7 +50,7 @@
 		"nats-streaming-cli": "^1.0.2"
 	},
 	"peerDependencies": {
-		"hafas-client": "^2 || ^3 || ^4 || ^5"
+		"hafas-client": "^5"
 	},
 	"scripts": {
 		"test": "env NODE_ENV=dev node test/index.js",
