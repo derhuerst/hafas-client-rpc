@@ -1,10 +1,8 @@
-'use strict'
+import {createClient as createHafas} from 'hafas-client'
+import {profile as vbbProfile} from 'hafas-client/p/vbb/index.js'
 
-const createHafas = require('hafas-client')
-const vbbProfile = require('hafas-client/p/vbb')
-
-const exposeHafasClient = require('../nats-streaming/server')
-const createClient = require('../nats-streaming/client')
+import exposeHafasClient from '../nats-streaming/server.js'
+import createClient from '../nats-streaming/client.js'
 
 const onError = (err) => {
 	if (!err) return;
@@ -23,7 +21,7 @@ const server = exposeHafasClient(hafas, onError)
 const client = createClient((err, hafas) => {
 	if (err) onError(err)
 
-	hafas.departures('900000009102')
+	hafas.departures('900009102')
 	.then(console.log)
 	.catch(console.error)
 })

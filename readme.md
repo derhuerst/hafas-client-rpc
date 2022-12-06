@@ -23,6 +23,8 @@ npm install hafas-client-rpc
 
 ## Usage
 
+*Note:* This version of `hafas-client-rpc` only works with specific versions of `hafas-client`. Check `peerDependencies` in [`package.json`](package.json) for details.
+
 `hafas-client-rpc` has multiple transports. Each of them has a client part (which sends commands to make HAFAS calls) and a server (which executes the HAFAS calls).
 
 ### via [WebSockets](https://en.wikipedia.org/wiki/WebSocket) transport
@@ -31,10 +33,10 @@ With this transport, the server part is an actual WebSockets server, and the cli
 
 ```js
 // server.js
-const http = require('http')
-const createHafas = require('hafas-client')
-const vbbProfile = require('hafas-client/p/vbb')
-const exposeHafasClient = require('hafas-client-rpc/ws/server')
+import http from 'http'
+import {createClient as createHafas} from 'hafas-client'
+import {profile as vbbProfile} from 'hafas-client/p/vbb/index.js'
+import exposeHafasClient from 'hafas-client-rpc/ws/server'
 
 const httpServer = http.createServer()
 httpServer.listen(3000)
@@ -45,8 +47,8 @@ const server = exposeHafasClient(httpServer, hafas)
 
 ```js
 // client.js
-const createRoundRobin = require('@derhuerst/round-robin-scheduler')
-const createClient = require('hafas-client-rpc/ws/client')
+import createRoundRobin from '@derhuerst/round-robin-scheduler'
+import createClient from 'hafas-client-rpc/ws/client.js'
 
 const pool = createClient(createRoundRobin, [
 	'ws://server-address:3000'
@@ -71,9 +73,9 @@ With this transport, the client spawns the server as a sub-process and sends com
 
 ```js
 // server.js
-const createHafas = require('hafas-client')
-const vbbProfile = require('hafas-client/p/vbb')
-const exposeViaStdio = require('hafas-client-rpc/stdio/server')
+import {createClient as createHafas} from 'hafas-client'
+import {profile as vbbProfile} from 'hafas-client/p/vbb/index.js'
+import exposeViaStdio from 'hafas-client-rpc/stdio/server.js'
 
 const hafas = createHafas(vbbProfile, 'my-awesome-program')
 
@@ -86,7 +88,7 @@ Creating a client *in Node.js* doesn't make sense, because you could just use `h
 
 ```js
 // client.js
-const createClient = require('hafas-client-rpc/stdio/client')
+import createClient from 'hafas-client-rpc/stdio/client.js'
 
 createClient('path/to/stdio/server.js', (_, hafas) => {
 	hafas.departures('900000009102')
@@ -127,9 +129,9 @@ With this transport, both client & server connect to a local TCP socket `/tmp/ha
 
 ```js
 // server.js
-const createHafas = require('hafas-client')
-const vbbProfile = require('hafas-client/p/vbb')
-const exposeViaSocket = require('hafas-client-rpc/socket/server')
+import {createClient as createHafas} from 'hafas-client'
+import {profile as vbbProfile} from 'hafas-client/p/vbb/index.js'
+import exposeViaSocket from 'hafas-client-rpc/socket/server.js'
 
 const hafas = createHafas(vbbProfile, 'my-awesome-program')
 
@@ -138,7 +140,7 @@ exposeViaSocket(hafas)
 
 ```js
 // client.js
-const createClient = require('hafas-client-rpc/socket/client')
+import createClient from 'hafas-client-rpc/socket/client.js'
 
 createClient((_, hafas) => {
 	hafas.departures('900000009102')
@@ -153,9 +155,9 @@ This transport relies on [NATS streaming channels](https://docs.nats.io/nats-str
 
 ```js
 // server.js
-const createHafas = require('hafas-client')
-const vbbProfile = require('hafas-client/p/vbb')
-const exposeViaNatsStreaming = require('hafas-client-rpc/nats-streaming/server')
+import {createClient as createHafas} from 'hafas-client'
+import {profile as vbbProfile} from 'hafas-client/p/vbb/index.js'
+import exposeViaNatsStreaming from 'hafas-client-rpc/nats-streaming/server.js'
 
 const hafas = createHafas(vbbProfile, 'hafas-client-rpc WebSockets example')
 exposeViaNatsStreaming(hafas, (err) => {
@@ -165,7 +167,7 @@ exposeViaNatsStreaming(hafas, (err) => {
 
 ```js
 // client.js
-const createClient = require('hafas-client-rpc/nats-streaming/client')
+import createClient from 'hafas-client-rpc/nats-streaming/client.js'
 
 const pool = createClient((_, hafas) => {
 	hafas.departures('900000009102')
@@ -176,7 +178,7 @@ const pool = createClient((_, hafas) => {
 
 ### Caveats
 
-- `hafas-client` exposes the used [*profile*](https://github.com/public-transport/hafas-client/tree/95af0a012767827347fbb8b0c36053cb767cf192/p) as `hafasClient.profile`, but because *profiles* consist of JavaScript functions, which can't be serialized properley, the `hafas-client-rpc` facade *does not* expose `.profile`.
+- `hafas-client` exposes the used [*profile*](https://github.com/public-transport/hafas-client/tree/8278ff9c621f3d0671d7e109f15ab1c89fabfc0e/p) as `hafasClient.profile`. Because these *profiles* consist of JavaScript functions, which can't be serialized properly, the `hafas-client-rpc` facade *does not* expose `.profile`.
 
 
 ## Related
