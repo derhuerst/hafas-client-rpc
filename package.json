@@ -1,7 +1,7 @@
 {
 	"name": "hafas-client-rpc",
 	"description": "Make JSON-RPC calls to hafas-client via WebSockets, stdio, UNIX domain sockets & NATS streaming.",
-	"version": "4.4.2",
+	"version": "4.4.3",
 	"main": "index.js",
 	"files": [
 		"index.js",

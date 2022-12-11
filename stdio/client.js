@@ -48,12 +48,14 @@ const createStdioRpcClient = (serverPath = _serverPath, cb) => {
 
 	readLines(server.stdout, (msgs, _, _cb) => {
 		for (const msg of msgs) {
+			if (!msg) continue
 			onMessage(msg, server)
 		}
 		_cb()
 	})
 	readLines(server.stderr, (msgs, _, _cb) => {
 		for (const msg of msgs) {
+			if (!msg) continue
 			if (!isReady && ready.test(msg)) {
 				isReady = true
 				onConnection(server)
