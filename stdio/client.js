@@ -19,6 +19,7 @@ const createStdioRpcClient = (serverPath = _serverPath, cb) => {
 	}
 
 	const server = execa($0, [serverPath])
+	let isReady = false
 
 	const send = msg => {
 		server.stdin.write(msg + '\n')
@@ -53,7 +54,8 @@ const createStdioRpcClient = (serverPath = _serverPath, cb) => {
 	})
 	readLines(server.stderr, (msgs, _, _cb) => {
 		for (const msg of msgs) {
-			if (ready.test(msg)) {
+			if (!isReady && ready.test(msg)) {
+				isReady = true
 				onConnection(server)
 				cb(null, facade)
 				continue;
