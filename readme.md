@@ -99,8 +99,8 @@ createClient('path/to/stdio/server.js', (_, hafas) => {
 
 Spawn the stdio RPC server as a sub process of your script:
 
-```shell
-node node_modules/hafas-client-rpc/stdio/simple-server.js
+```bash
+node $(node -p 'require.resolve("hafas-client-rpc/stdio/simple-server.js")')
 ```
 
 Send [JSON-RPC](todo) 2.0 calls via `stdin`:
