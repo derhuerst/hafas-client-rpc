@@ -12,7 +12,7 @@ const createClientAdapter = require('../lib/client-adapter')
 require('./ws')
 require('./stdio')
 require('./socket')
-require('./nats-streaming')
+// require('./nats-streaming')
 
 ;(async () => {
 	const ID = '123'
