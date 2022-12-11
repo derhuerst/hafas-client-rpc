@@ -17,7 +17,12 @@ const server = exposeHafasClient(hafas, (err) => {
 		if (err) showError(err)
 
 		hafas.departures('900009102')
-		.then(console.log)
-		.catch(console.error)
+		.then((res) => {
+			console.log(res)
+
+			server.close()
+			client.close()
+		})
+		.catch(showError)
 	})
 })

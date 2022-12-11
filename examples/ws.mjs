@@ -21,7 +21,12 @@ const pool = createClient(createRoundRobin, [
 	'ws://localhost:3000'
 ], (_, hafas) => {
 	hafas.departures('900009102')
-	.then(console.log)
+	.then((res) => {
+		console.log(res)
+
+		httpServer.close()
+		pool.close()
+	})
 	.catch(console.error)
 })
 pool.on('error', console.error)
