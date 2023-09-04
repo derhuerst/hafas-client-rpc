@@ -1,7 +1,7 @@
 {
 	"name": "hafas-client-rpc",
 	"description": "Make JSON-RPC calls to hafas-client via WebSockets, stdio, UNIX domain sockets & NATS streaming.",
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -51,7 +51,7 @@
 		"nats-streaming-cli": "^1.0.2"
 	},
 	"peerDependencies": {
-		"hafas-client": ">=6.0 <=6.0"
+		"hafas-client": ">=6.0 <=6.1"
 	},
 	"scripts": {
 		"lint": "eslint --ext .js,.mjs .",
